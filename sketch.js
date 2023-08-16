@@ -50,7 +50,7 @@ function setup() {
     //sprite settings
     player1.anis.dead.looping = false;
     player1.changeAni('idle');
-    player1.scale=1.2;
+    player1.scale=1.75;
     player1.anis.offset.y = -25;
     player1.rotationLock = true;
 
@@ -120,7 +120,7 @@ function setup() {
     //sprite settings
     player2.anis.dead.looping = false;
     player2.changeAni('idle');
-    player2.scale = 1.5;
+    player2.scale = 2;
     player2.mirror.x = true;
     player2.rotationLock = true;
 
