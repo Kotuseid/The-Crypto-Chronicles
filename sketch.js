@@ -69,6 +69,9 @@ function setup() {
                         player2.health -= 5;
                     }
                 }
+                if(player2.health<0) {
+                    player2.health=0;
+                }
             }
             player1.changeAni('idle');
         }
@@ -87,6 +90,10 @@ function setup() {
                     if (player1.x - player1.w / 2 > player2.x + player2.w / 2) {
                         player2.health -= 10;
                     }
+                }
+                
+                if(player2.health<0) {
+                    player2.health=0;
                 }
             }
             player1.changeAni('idle');
@@ -132,6 +139,10 @@ function setup() {
                         player1.health -= 7;
                     }
                 }
+                
+                if(player1.health<0) {
+                    player1.health=0;
+                }
             }
             player2.changeAni('idle');
         }
@@ -150,6 +161,9 @@ function setup() {
                     if (player2.x - player2.w / 2 > player1.x + player1.w / 2) {
                         player1.health -= 13;
                     }
+                }
+                if(player1.health<0) {
+                    player1.health=0;
                 }
             }
             player2.changeAni('idle');
