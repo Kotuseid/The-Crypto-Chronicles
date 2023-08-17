@@ -38,7 +38,7 @@ function setup() {
     new border.Sprite(canvas.w, canvas.h / 2, 10, canvas.h);
 
     // --- PLAYER 1 --- //
-    player1 = new Sprite(canvas.w / 4, canvas.h / 2, 30, 75);
+    player1 = new Sprite(canvas.w / 4, canvas.h / 2, 55, 75);
 
     //load spritesheet animations
     player1.addAni("walk", "assets/robot/Walk.png", { frames: 8, frameSize: [128, 128], frameDelay: 5 });
@@ -50,7 +50,7 @@ function setup() {
     //sprite settings
     player1.anis.dead.looping = false;
     player1.changeAni('idle');
-    player1.scale=1.75;
+    player1.scale = 1.65;
     player1.anis.offset.y = -25;
     player1.rotationLock = true;
 
@@ -60,18 +60,18 @@ function setup() {
             player1.cooldown = maxCooldown * 2 / 3;
 
             await player1.changeAni('attack1');
-            if (player1.colliding(player2)) {
+            if (player1.overlapping(player2)) {
                 if (!player1.mirror.x) {
-                    if (player1.x + player1.w / 2 < player2.x - player2.w / 2) {
+                    if (player1.x < player2.x) {
                         player2.health -= 5;
                     }
                 } else {
-                    if (player1.x - player1.w / 2 > player2.x + player2.w / 2) {
+                    if (player1.x > player2.x) {
                         player2.health -= 5;
                     }
                 }
-                if(player2.health<0) {
-                    player2.health=0;
+                if (player2.health < 0) {
+                    player2.health = 0;
                 }
             }
             player1.changeAni('idle');
@@ -82,19 +82,19 @@ function setup() {
             player1.cooldown = maxCooldown;
 
             await player1.changeAni('attack2');
-            if (player1.colliding(player2)) {
+            if (player1.overlapping(player2)) {
                 if (!player1.mirror.x) {
-                    if (player1.x + player1.w / 2 < player2.x - player2.w / 2) {
+                    if (player1.x < player2.x) {
                         player2.health -= 10;
                     }
                 } else {
-                    if (player1.x - player1.w / 2 > player2.x + player2.w / 2) {
+                    if (player1.x > player2.x) {
                         player2.health -= 10;
                     }
                 }
-                
-                if(player2.health<0) {
-                    player2.health=0;
+
+                if (player2.health < 0) {
+                    player2.health = 0;
                 }
             }
             player1.changeAni('idle');
@@ -103,12 +103,12 @@ function setup() {
 
     //custom properties
     player1.keys = { up: "w", down: "s", left: "a", right: "d" };
-    player1.agility = 3;
+    player1.agility = 4;
     player1.health = 100;
     player1.cooldown = 0;
 
     // --- PLAYER 2 --- //
-    player2 = new Sprite(canvas.w / 4 * 3, canvas.h / 2, 35, 55);
+    player2 = new Sprite(canvas.w / 4 * 3, canvas.h / 2, 60, 55);
 
     //load spritesheet animations
     player2.addAni('idle', "assets/reptile/idle.png", { frames: 4, frameSize: [70, 70], frameDelay: 10 })
@@ -120,7 +120,7 @@ function setup() {
     //sprite settings
     player2.anis.dead.looping = false;
     player2.changeAni('idle');
-    player2.scale = 2;
+    player2.scale = 2.2;
     player2.mirror.x = true;
     player2.rotationLock = true;
 
@@ -130,19 +130,19 @@ function setup() {
             player2.cooldown = maxCooldown * 2 / 3;
 
             await player2.changeAni('attack1');
-            if (player2.colliding(player1)) {
+            if (player2.overlapping(player1)) {
                 if (!player2.mirror.x) {
-                    if (player2.x + player2.w / 2 < player1.x - player1.w / 2) {
+                    if (player2.x < player1.x) {
                         player1.health -= 7;
                     }
                 } else {
-                    if (player2.x - player2.w / 2 > player1.x + player1.w / 2) {
+                    if (player2.x > player1.x) {
                         player1.health -= 7;
                     }
                 }
-                
-                if(player1.health<0) {
-                    player1.health=0;
+
+                if (player1.health < 0) {
+                    player1.health = 0;
                 }
             }
             player2.changeAni('idle');
@@ -153,18 +153,18 @@ function setup() {
             player2.cooldown = maxCooldown;
 
             await player2.changeAni('attack2');
-            if (player2.colliding(player1)) {
+            if (player2.overlapping(player1)) {
                 if (!player2.mirror.x) {
-                    if (player2.x + player2.w / 2 < player1.x - player1.w / 2) {
+                    if (player2.x < player1.x) {
                         player1.health -= 13;
                     }
                 } else {
-                    if (player2.x - player2.w / 2 > player1.x + player1.w / 2) {
+                    if (player2.x > player1.x) {
                         player1.health -= 13;
                     }
                 }
-                if(player1.health<0) {
-                    player1.health=0;
+                if (player1.health < 0) {
+                    player1.health = 0;
                 }
             }
             player2.changeAni('idle');
@@ -173,11 +173,12 @@ function setup() {
 
     //custom properties
     player2.keys = { up: "ArrowUp", down: "ArrowDown", left: "ArrowLeft", right: "ArrowRight" };
-    player2.agility = 2;
+    player2.agility = 3;
     player2.health = 100;
     player2.cooldown = 0;
 
 
+    player1.overlaps(player2);
     //only for testing
     allSprites.debug = true;
 }
