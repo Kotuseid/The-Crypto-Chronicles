@@ -4,16 +4,17 @@ const NAME_2 = "Mark";
 //declare variables
 
 let player1, player2,
-    backgroundImage,
+    backgroundImage, shieldImage,
     border,
     digitalDisco,
     maxCooldown = 150,
-    healthBoost,shield;
+    healthBoost, shield;
 
 //preload images, fonts, animations, soundtracks
 
 function preload() {
     backgroundImage = loadImage("assets/background/sky bridge.png");//load background
+    shieldImage = loadImage("assets/buffs/Bubble.png");//load shield image
     digitalDisco = loadFont("assets/font/DigitalDisco.ttf");//load font
 }
 
@@ -207,7 +208,7 @@ function setup() {
     shield.x = () => { return random(5, canvas.w - 5) };
     shield.y = () => { return random(canvas.w * 0.135, canvas.h - canvas.w * 0.07) };
     shield.d = 140;
-    shield.scale = 1;
+    shield.scale = 0.5;
     shield.frequency = 30;//seconds
 
     setTimeout(() => {
@@ -261,6 +262,15 @@ function draw() {
         player2.changeAni('dead');
         player2.collider = 's';
         player1.collider = 's';
+    }
+
+    if (player1.invincible) {
+
+        image(shieldImage, player1.x - 75, player1.y - 75, 150, 150);
+    }
+    if (player2.invincible) {
+
+        image(shieldImage, player2.x - 75, player2.y - 75, 150, 150);
     }
 
     // --- STATS DISPLAY --- //
