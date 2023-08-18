@@ -8,7 +8,7 @@ let player1, player2,
     border,
     digitalDisco,
     maxCooldown = 150,
-    healthBoost;
+    healthBoost,shield;
 
 //preload images, fonts, animations, soundtracks
 
@@ -198,6 +198,14 @@ function setup() {
     player1.overlaps(healthBoost, boostHealth);
 
     player2.overlaps(healthBoost, boostHealth);
+
+    shield = new Group();
+    shield.img = "assets/buffs/Bubble.png";
+    shield.x = () => { return random(5, canvas.w - 5) };
+    shield.y = () => { return random(canvas.w * 0.135, canvas.h - canvas.w * 0.07) };
+    shield.d = 140;
+    shield.scale = 1;
+    shield.frequency = 5;//seconds
 
     //only for testing
     allSprites.debug = true;
