@@ -215,7 +215,7 @@ function setup() {
         if (shield.length == 0) {
             new shield.Sprite();
         }
-    }, shield.frequency * 1000);
+    }, shield.frequency * 1000 / 2);
 
     player1.overlaps(shield, boostShield);
 
