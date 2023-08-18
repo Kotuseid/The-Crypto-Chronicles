@@ -91,3 +91,18 @@ function boostHealth(p, h) {
         }
     }, healthBoost.frequency * 1000);
 }
+
+function boostShield(p, s){
+
+    p.invincible = true;
+    setTimeout(()=>{
+        p.invincible=false;
+    },5000);
+    s.remove();
+    
+    setTimeout(() => {
+        if (shield.length == 0) {
+            new shield.Sprite();
+        }
+    }, shield.frequency * 1000);
+}

@@ -61,7 +61,7 @@ function setup() {
             player1.cooldown = maxCooldown * 2 / 3;
 
             await player1.changeAni('attack1');
-            if (player1.overlapping(player2)) {
+            if (player1.overlapping(player2) && player2.invincible == false) {
                 if (!player1.mirror.x) {
                     if (player1.x < player2.x) {
                         player2.health -= 5;
@@ -83,7 +83,7 @@ function setup() {
             player1.cooldown = maxCooldown;
 
             await player1.changeAni('attack2');
-            if (player1.overlapping(player2)) {
+            if (player1.overlapping(player2) && player2.invincible == false) {
                 if (!player1.mirror.x) {
                     if (player1.x < player2.x) {
                         player2.health -= 10;
@@ -107,6 +107,8 @@ function setup() {
     player1.agility = 4;
     player1.health = 100;
     player1.cooldown = 0;
+    player1.invincible = false;
+
 
     // --- PLAYER 2 --- //
     player2 = new Sprite(canvas.w / 4 * 3, canvas.h / 2, 60, 55);
@@ -131,7 +133,7 @@ function setup() {
             player2.cooldown = maxCooldown * 2 / 3;
 
             await player2.changeAni('attack1');
-            if (player2.overlapping(player1)) {
+            if (player2.overlapping(player1) && player1.invincible == false) {
                 if (!player2.mirror.x) {
                     if (player2.x < player1.x) {
                         player1.health -= 7;
@@ -154,7 +156,7 @@ function setup() {
             player2.cooldown = maxCooldown;
 
             await player2.changeAni('attack2');
-            if (player2.overlapping(player1)) {
+            if (player2.overlapping(player1) && player1.invincible == false) {
                 if (!player2.mirror.x) {
                     if (player2.x < player1.x) {
                         player1.health -= 13;
@@ -177,6 +179,7 @@ function setup() {
     player2.agility = 3;
     player2.health = 100;
     player2.cooldown = 0;
+    player2.invincible = false;
 
     player1.overlaps(player2);
 
@@ -205,7 +208,18 @@ function setup() {
     shield.y = () => { return random(canvas.w * 0.135, canvas.h - canvas.w * 0.07) };
     shield.d = 140;
     shield.scale = 1;
-    shield.frequency = 5;//seconds
+    shield.frequency = 30;//seconds
+
+    setTimeout(() => {
+        if (shield.length == 0) {
+            new shield.Sprite();
+        }
+    }, shield.frequency * 1000);
+
+    player1.overlaps(shield, boostShield);
+
+    player2.overlaps(shield, boostShield);
+
 
     //only for testing
     allSprites.debug = true;
