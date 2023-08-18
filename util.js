@@ -85,5 +85,9 @@ function boostHealth(p, h) {
         p.health = 100;
     }
     h.remove();
-
+    setTimeout(() => {
+        if (healthBoost.length == 0) {
+            new healthBoost.Sprite();
+        }
+    }, healthBoost.frequency * 1000);
 }

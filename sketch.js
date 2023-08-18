@@ -187,9 +187,9 @@ function setup() {
     healthBoost.y = () => { return random(canvas.w * 0.135, canvas.h - canvas.w * 0.07) };
     healthBoost.d = 140;
     healthBoost.scale = 0.4;
-    healthBoost.frequency = 5;//seconds
+    healthBoost.frequency = 30;//seconds
 
-    setInterval(() => {
+    setTimeout(() => {
         if (healthBoost.length == 0) {
             new healthBoost.Sprite();
         }
