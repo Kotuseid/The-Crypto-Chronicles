@@ -256,12 +256,24 @@ function draw() {
         player1.changeAni('dead');
         player1.collider = 's';
         player2.collider = 's';
+
+        //Player 2 win screen
+        textSize(100);
+        fill("white");
+
+        text("Player 2 wins!",canvas.w/2,250);
+
     }
     // --- PLAYER 2 IS DEAD --- //
     else if (player2.health <= 0) {
         player2.changeAni('dead');
         player2.collider = 's';
         player1.collider = 's';
+
+        //Player 1 win screen
+        textSize(100);
+        fill("white");
+        text("Player 1 wins!",canvas.w/2,250)
     }
 
     if (player1.invincible) {
