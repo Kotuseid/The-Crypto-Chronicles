@@ -105,7 +105,7 @@ function setup() {
 
     //custom properties
     player1.keys = { up: "w", down: "s", left: "a", right: "d" };
-    player1.agility = 4;
+    player1.agility = 100;
     player1.health = 100;
     player1.cooldown = 0;
     player1.invincible = false;
