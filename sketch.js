@@ -260,7 +260,7 @@ function draw() {
         //Player 2 win screen
         textSize(100);
         fill("black");
-        text("Player 2 wins!",canvas.w/2,250);
+        text("Player 2 wins!",canvas.w/2,100);
 
     }
     // --- PLAYER 2 IS DEAD --- //
@@ -272,7 +272,7 @@ function draw() {
         //Player 1 win screen
         textSize(100);
         fill("black");
-        text("Player 1 wins!",canvas.w/2,250)
+        text("Player 1 wins!",canvas.w/2,100)
     }
 
     if (player1.invincible) {
