@@ -8,7 +8,8 @@ let player1, player2,
     border,
     digitalDisco,
     maxCooldown = 150,
-    healthBoost, shield;
+    healthBoost, shield,
+    spikeDebuff;
 
 //preload images, fonts, animations, soundtracks
 
@@ -220,6 +221,15 @@ function setup() {
     player1.overlaps(shield, boostShield);
 
     player2.overlaps(shield, boostShield);
+
+    
+    spikeDebuff = new Group();
+    spikeDebuff.img = "assets/debuffs/Spikes.png";
+    spikeDebuff.scale = 0.78;
+    spikeDebuff.width = 100;
+    spikeDebuff.height = 0.78 * 64;
+    new spikeDebuff.Sprite(canvas.w/3,canvas.h/2)
+    new spikeDebuff.Sprite(canvas.w/3*2,canvas.h/3*2)
 
 
     //only for testing
