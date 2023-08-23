@@ -19,3 +19,4 @@ Note:
 * shield boosts spawn every 30 seconds, and give invincibility for ~5 seconds
 * if a player is facing away from the other player despite overlapping, the attack will not work
 * a player must face the other player while overlapping and not cross its halfway point for the attack to work
+* every overlap with the spikes loses 1% of health
