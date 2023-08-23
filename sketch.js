@@ -41,7 +41,7 @@ function setup() {
     new border.Sprite(canvas.w, canvas.h / 2, 10, canvas.h);
 
     // --- PLAYER 1 --- //
-    player1 = new Sprite(canvas.w / 4, canvas.h / 2, 55, 75);
+    player1 = new Sprite(5+55/2, canvas.h / 2, 55, 75);
 
     //load spritesheet animations
     player1.addAni("walk", "assets/robot/Walk.png", { frames: 8, frameSize: [128, 128], frameDelay: 5 });
@@ -113,7 +113,7 @@ function setup() {
 
 
     // --- PLAYER 2 --- //
-    player2 = new Sprite(canvas.w / 4 * 3, canvas.h / 2, 60, 55);
+    player2 = new Sprite(canvas.w-5-60/2, canvas.h / 2, 60, 55);
 
     //load spritesheet animations
     player2.addAni('idle', "assets/reptile/idle.png", { frames: 4, frameSize: [70, 70], frameDelay: 10 })
@@ -222,18 +222,22 @@ function setup() {
 
     player2.overlaps(shield, boostShield);
 
-    
+
     spikeDebuff = new Group();
     spikeDebuff.img = "assets/debuffs/Spikes.png";
     spikeDebuff.scale = 0.78;
-    spikeDebuff.width = 100;
-    spikeDebuff.height = 0.78 * 64;
-    new spikeDebuff.Sprite(canvas.w/3,canvas.h/2)
-    new spikeDebuff.Sprite(canvas.w/3*2,canvas.h/3*2)
+    spikeDebuff.width = 60;
+    spikeDebuff.height = 25;
+    spikeDebuff.collider = 's';
+    new spikeDebuff.Sprite(canvas.w / 3, canvas.h / 2)
+    new spikeDebuff.Sprite(canvas.w / 3 * 2, canvas.h / 3 * 2)
+
+    player1.overlaps(spikeDebuff, spikeDamage);
+    player2.overlaps(spikeDebuff, spikeDamage);
 
 
     //only for testing
-    allSprites.debug = true;
+    // allSprites.debug = true;
 }
 
 //draw loop
@@ -270,7 +274,7 @@ function draw() {
         //Player 2 win screen
         textSize(100);
         fill("black");
-        text("Player 2 wins!",canvas.w/2,100);
+        text("Player 2 wins!", canvas.w / 2, 100);
 
     }
     // --- PLAYER 2 IS DEAD --- //
@@ -282,7 +286,7 @@ function draw() {
         //Player 1 win screen
         textSize(100);
         fill("black");
-        text("Player 1 wins!",canvas.w/2,100)
+        text("Player 1 wins!", canvas.w / 2, 100)
     }
 
     if (player1.invincible) {

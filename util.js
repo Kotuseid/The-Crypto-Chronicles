@@ -106,3 +106,9 @@ function boostShield(p, s){
         }
     }, shield.frequency * 1000);
 }
+
+function spikeDamage(p, s) {
+    if (!p.invincible) {
+        p.health -= 1;
+    }
+}
