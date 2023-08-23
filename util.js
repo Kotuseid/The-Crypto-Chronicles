@@ -10,7 +10,7 @@ function statsDisplay(x, y, w, h, sprite, name) {
 
     //display name
     fill('black')
-    text(name.toUpperCase() + ': ' + sprite.health + '%', x + w / 2, y - 3 * p);
+    text(name + ': ' + sprite.health + '%', x + w / 2, y - 3 * p);
 
     //display health bar
     noStroke();
@@ -92,14 +92,14 @@ function boostHealth(p, h) {
     }, healthBoost.frequency * 1000);
 }
 
-function boostShield(p, s){
+function boostShield(p, s) {
 
     p.invincible = true;
-    setTimeout(()=>{
-        p.invincible=false;
-    },5000);
+    setTimeout(() => {
+        p.invincible = false;
+    }, 5000);
     s.remove();
-    
+
     setTimeout(() => {
         if (shield.length == 0) {
             new shield.Sprite();
@@ -111,4 +111,9 @@ function spikeDamage(p, s) {
     if (!p.invincible) {
         p.health -= 1;
     }
+}
+
+let saveNames = () => {
+    NAME_1 = document.getElementById('name1').value;
+    NAME_2 = document.getElementById('name2').value;
 }

@@ -1,5 +1,5 @@
-const NAME_1 = "Elon";
-const NAME_2 = "Mark";
+let NAME_1 = "Elon";
+let NAME_2 = "Mark";
 
 //declare variables
 
