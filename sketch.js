@@ -232,8 +232,8 @@ function setup() {
     new spikeDebuff.Sprite(canvas.w / 3, canvas.h / 2)
     new spikeDebuff.Sprite(canvas.w / 3 * 2, canvas.h / 3 * 2)
 
-    player1.overlaps(spikeDebuff, spikeDamage);
-    player2.overlaps(spikeDebuff, spikeDamage);
+    player1.overlapping(spikeDebuff, spikeDamage);
+    player2.overlapping(spikeDebuff, spikeDamage);
 
 
     //only for testing
@@ -274,7 +274,7 @@ function draw() {
         //Player 2 win screen
         textSize(100);
         fill("black");
-        text("Player 2 wins!", canvas.w / 2, 100);
+        text(NAME_2+" wins!", canvas.w / 2, 100);
 
     }
     // --- PLAYER 2 IS DEAD --- //
@@ -286,7 +286,7 @@ function draw() {
         //Player 1 win screen
         textSize(100);
         fill("black");
-        text("Player 1 wins!", canvas.w / 2, 100)
+        text(NAME_1+" wins!", canvas.w / 2, 100)
     }
 
     if (player1.invincible) {

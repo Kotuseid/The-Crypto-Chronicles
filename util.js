@@ -108,7 +108,7 @@ function boostShield(p, s) {
 }
 
 function spikeDamage(p, s) {
-    if (!p.invincible) {
+    if (!p.invincible && frameCount % 60 == 0) {
         p.health -= 1;
     }
 }
@@ -117,3 +117,10 @@ let saveNames = () => {
     NAME_1 = document.getElementById('name1').value;
     NAME_2 = document.getElementById('name2').value;
 }
+
+
+window.addEventListener("keydown", function (e) {
+    if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+        e.preventDefault();
+    }
+}, false);
