@@ -1,4 +1,4 @@
-# How to PLay
+# How to Play
 
 Play game at: <https://kotuseid.github.io/term-3-assignment/>
 
