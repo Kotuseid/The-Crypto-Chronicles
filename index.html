@@ -14,12 +14,20 @@
 
 <body>
     <main>
+        <div>
+            <div><a href="https://github.com/Kotuseid/term-3-assignment#readme" target="_blank"><button>How to
+                        Play</button></a></div>
+            <div>
+                <label for="name1">Player 1:</label>
+                <input type="text" name="name1" id="name1" value="Elon" maxlength="15">
+            </div>
+            <div>
+                <label for="name2">Player 2:</label>
+                <input type="text" name="name2" id="name2" value="Mark" maxlength="15">
+            </div>
+            <div><button onclick="saveNames()">Save</button></div>
+        </div>
     </main>
-    <label for="name1">Player 1:</label>
-    <input type="text" name="name1" id="name1" value="Elon" maxlength="15"><br>
-    <label for="name2">Player 2:</label>
-    <input type="text" name="name2" id="name2" value="Mark" maxlength="15"><br>
-    <button onclick="saveNames()">Save</button>
     <script src="sketch.js"></script>
     <script src="util.js"></script>
 </body>
