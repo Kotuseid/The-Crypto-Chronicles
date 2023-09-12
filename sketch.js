@@ -9,7 +9,8 @@ let player1, player2,
     digitalDisco,
     maxCooldown = 150,
     healthBoost, shield,
-    spikeDebuff;
+    spikeDebuff,
+    playing = false, playButton;
 
 //preload images, fonts, animations, soundtracks
 
@@ -40,8 +41,20 @@ function setup() {
     //right border
     new border.Sprite(canvas.w, canvas.h / 2, 10, canvas.h);
 
+    // --- SPIKES --- //
+    spikeDebuff = new Group();
+    spikeDebuff.img = "assets/debuffs/Spikes.png";
+    spikeDebuff.scale = 0.78;
+    spikeDebuff.width = 60;
+    spikeDebuff.height = 25;
+    spikeDebuff.collider = 's';
+    new spikeDebuff.Sprite(canvas.w / 3, canvas.h / 2)
+    new spikeDebuff.Sprite(canvas.w / 3 * 2, canvas.h / 3 * 2)
+
+
+
     // --- PLAYER 1 --- //
-    player1 = new Sprite(5+55/2, canvas.h / 2, 55, 75);
+    player1 = new Sprite(5 + 55 / 2, canvas.h / 2, 55, 75);
 
     //load spritesheet animations
     player1.addAni("walk", "assets/robot/Walk.png", { frames: 8, frameSize: [128, 128], frameDelay: 5 });
@@ -113,7 +126,7 @@ function setup() {
 
 
     // --- PLAYER 2 --- //
-    player2 = new Sprite(canvas.w-5-60/2, canvas.h / 2, 60, 55);
+    player2 = new Sprite(canvas.w - 5 - 60 / 2, canvas.h / 2, 60, 55);
 
     //load spritesheet animations
     player2.addAni('idle', "assets/reptile/idle.png", { frames: 4, frameSize: [70, 70], frameDelay: 10 })
@@ -185,7 +198,7 @@ function setup() {
 
     player1.overlaps(player2);
 
-
+    // --- HEALTH BOOST --- //
     healthBoost = new Group();
     healthBoost.img = "assets/buffs/Life.png";
     healthBoost.x = () => { return random(5, canvas.w - 5) };
@@ -201,9 +214,9 @@ function setup() {
     }, healthBoost.frequency * 1000);
 
     player1.overlaps(healthBoost, boostHealth);
-
     player2.overlaps(healthBoost, boostHealth);
 
+    // --- SHIELD --- //
     shield = new Group();
     shield.img = "assets/buffs/Bubble.png";
     shield.x = () => { return random(5, canvas.w - 5) };
@@ -219,90 +232,134 @@ function setup() {
     }, shield.frequency * 1000 / 2);
 
     player1.overlaps(shield, boostShield);
-
     player2.overlaps(shield, boostShield);
 
 
-    spikeDebuff = new Group();
-    spikeDebuff.img = "assets/debuffs/Spikes.png";
-    spikeDebuff.scale = 0.78;
-    spikeDebuff.width = 60;
-    spikeDebuff.height = 25;
-    spikeDebuff.collider = 's';
-    new spikeDebuff.Sprite(canvas.w / 3, canvas.h / 2)
-    new spikeDebuff.Sprite(canvas.w / 3 * 2, canvas.h / 3 * 2)
 
+    // --- SPIKES --- //
     player1.overlapping(spikeDebuff, spikeDamage);
     player2.overlapping(spikeDebuff, spikeDamage);
 
 
+    allSprites.autoDraw = false;
     //only for testing
     // allSprites.debug = true;
+
+    textAlign(CENTER, CENTER);
+    textFont(digitalDisco);
+
+    playButton = new Sprite(canvas.w / 2, canvas.h / 2, 200, 70, 's');
+    playButton.visible = false;
+    playButton.color = color(0, 0, 0, 255);
+    // playButton.collider='none';
+
+
+    //background image
+    image(backgroundImage, 0, 0);
+    playButton.draw();
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //draw loop
 function draw() {
-    //background image
-    image(backgroundImage, 0, 0);
 
-    // --- IF NOT DEAD --- //
-    if (player1.health > 0 && player2.health > 0) {
+    // --- IF PLAYING --- //
+    if (playing) {
+        //background image
+        image(backgroundImage, 0, 0);
 
-        // --- PLAYER ATTACKS --- //
-        if (kb.pressed('e')) {
-            player1.attack1();
-        } else if (kb.pressed('q')) {
-            player1.attack2();
+
+        // --- STATS DISPLAY --- //
+        statsDisplay(30, 30, 200, 30, player1, NAME_1);
+        statsDisplay(canvas.w - 200 - 30, 30, 200, 30, player2, NAME_2);
+
+        allSprites.draw();
+
+        // --- IF NOT DEAD --- //
+        if (player1.health > 0 && player2.health > 0) {
+
+            // --- PLAYER ATTACKS --- //
+            if (kb.pressed('e')) {
+                player1.attack1();
+            } else if (kb.pressed('q')) {
+                player1.attack2();
+            }
+            if (kb.pressed('.')) {
+                player2.attack1();
+            } else if (kb.pressed(',')) {
+                player2.attack2();
+            }
+
+            // --- PLAYER MOVEMENT --- //
+            movement(player1);
+            movement(player2);
+
         }
-        if (kb.pressed('.')) {
-            player2.attack1();
-        } else if (kb.pressed(',')) {
-            player2.attack2();
+        // --- PLAYER 1 IS DEAD --- //
+        else if (player1.health <= 0) {
+            player1.changeAni('dead');
+            player1.collider = 's';
+            player2.collider = 's';
+
+            //Player 2 win screen
+            textSize(100);
+            stroke(255);
+            strokeWeight(5);
+            fill("black");
+            text(NAME_2 + " wins!", canvas.w / 2, canvas.h - 100);
+
+            playScreen();
+        }
+        // --- PLAYER 2 IS DEAD --- //
+        else if (player2.health <= 0) {
+            player2.changeAni('dead');
+            player2.collider = 's';
+            player1.collider = 's';
+
+            //Player 1 win screen
+            textSize(100);
+            stroke(255);
+            strokeWeight(5);
+            fill("black");
+            text(NAME_1 + " wins!", canvas.w / 2, canvas.h - 100);
+
+            playScreen();
         }
 
-        // --- PLAYER MOVEMENT --- //
-        movement(player1);
-        movement(player2);
+        if (player1.invincible) {
 
+            image(shieldImage, player1.x - 75, player1.y - 75, 150, 150);
+        }
+        if (player2.invincible) {
+
+            image(shieldImage, player2.x - 75, player2.y - 75, 150, 150);
+        }
+
+
+
+        //decrement the cooldown
+        if (player1.cooldown > 0) player1.cooldown--;
+        if (player2.cooldown > 0) player2.cooldown--;
+
+    } else {
+        playScreen();
     }
-    // --- PLAYER 1 IS DEAD --- //
-    else if (player1.health <= 0) {
-        player1.changeAni('dead');
-        player1.collider = 's';
-        player2.collider = 's';
-
-        //Player 2 win screen
-        textSize(100);
-        fill("black");
-        text(NAME_2+" wins!", canvas.w / 2, 100);
-
-    }
-    // --- PLAYER 2 IS DEAD --- //
-    else if (player2.health <= 0) {
-        player2.changeAni('dead');
-        player2.collider = 's';
-        player1.collider = 's';
-
-        //Player 1 win screen
-        textSize(100);
-        fill("black");
-        text(NAME_1+" wins!", canvas.w / 2, 100)
-    }
-
-    if (player1.invincible) {
-
-        image(shieldImage, player1.x - 75, player1.y - 75, 150, 150);
-    }
-    if (player2.invincible) {
-
-        image(shieldImage, player2.x - 75, player2.y - 75, 150, 150);
-    }
-
-    // --- STATS DISPLAY --- //
-    statsDisplay(30, 30, 200, 30, player1, NAME_1);
-    statsDisplay(canvas.w - 200 - 30, 30, 200, 30, player2, NAME_2);
-
-    //decrement the cooldown
-    if (player1.cooldown > 0) player1.cooldown--;
-    if (player2.cooldown > 0) player2.cooldown--;
 }

@@ -9,7 +9,9 @@ function statsDisplay(x, y, w, h, sprite, name) {
     textSize(p * 4);
 
     //display name
-    fill('black')
+    fill('black');
+    strokeWeight(1);
+    stroke(255);
     text(name + ': ' + sprite.health + '%', x + w / 2, y - 3 * p);
 
     //display health bar
@@ -57,7 +59,7 @@ function movement(sprite) {
         sprite.velocity.y = 0;
     }
 
-    //animate sprite walking or idle of not attacking or dead
+    //animate sprite walking or idle or not attacking or dead
     if (sprite.ani.name != 'attack1' && sprite.ani.name != 'attack2' && sprite.ani.name != 'dead') {
 
         if (kb.pressing(key.right)) {
@@ -78,6 +80,7 @@ function movement(sprite) {
     }
 }
 
+//when player collects health boost
 function boostHealth(p, h) {
 
     p.health += 5;
@@ -92,6 +95,7 @@ function boostHealth(p, h) {
     }, healthBoost.frequency * 1000);
 }
 
+//when player collects shield boost
 function boostShield(p, s) {
 
     p.invincible = true;
@@ -107,20 +111,80 @@ function boostShield(p, s) {
     }, shield.frequency * 1000);
 }
 
+//when player touches spikes
 function spikeDamage(p, s) {
     if (!p.invincible && frameCount % 60 == 0) {
         p.health -= 1;
     }
 }
 
+//function to save names when button is pressed
 let saveNames = () => {
     NAME_1 = document.getElementById('name1').value;
     NAME_2 = document.getElementById('name2').value;
 }
 
-
+//prevent the window from moving when pressing arrow keys
 window.addEventListener("keydown", function (e) {
     if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
         e.preventDefault();
     }
 }, false);
+
+
+function playScreen() {
+    playButton.y = canvas.h / 2;
+    playButton.visible = false;
+
+
+    stroke(255, 0, 0);
+    strokeWeight(5);
+    fill(0);
+    rect(canvas.w / 2 - 100, canvas.h / 2 - 35, 200, 70);
+    noStroke();
+    fill(255);
+    textSize(80);
+    text("PLAY", canvas.w / 2, canvas.h / 2 - 5);
+
+
+
+    if (playButton.mouse.hovering()) {
+        mouse.cursor = 'pointer';
+    } else {
+        mouse.cursor = 'default';
+    }
+
+    if (playButton.mouse.pressing()) {
+        playing = true;
+
+        player1.collider = 'd';
+        player2.collider = 'd';
+        player1.x = 5 + 55 / 2;
+        player1.y = canvas.h / 2;
+        player2.x = canvas.w - 5 - 60 / 2;
+        player2.y = canvas.h / 2;
+        
+
+        player1.agility = 4;
+        player1.health = 100;
+        player1.cooldown = 0;
+        player1.invincible = false;
+        player1.mirror.x = false;
+        player1.changeAni('idle');
+
+
+        player2.agility = 3;
+        player2.health = 100;
+        player2.cooldown = 0;
+        player2.invincible = false;
+        player2.mirror.x = true;
+        player2.changeAni('idle');
+
+        healthBoost.amount = 0;
+        shield.amount = 0;
+
+
+        playButton.y = 2 * canvas.h;
+        mouse.cursor = 'default';
+    }
+}
