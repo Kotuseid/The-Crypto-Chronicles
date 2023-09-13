@@ -258,13 +258,17 @@ function setup() {
     playButton.draw();
 
     music.playMode = 'restart';
-    music.play();
     music.setLoop(true);
     music.setVolume(0.08);
 }
 
 
+document.addEventListener("click", () => {
+    if (!music.isPlaying()) {
+        music.play();
+    }
 
+})
 
 
 
