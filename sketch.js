@@ -10,7 +10,8 @@ let player1, player2,
     maxCooldown = 150,
     healthBoost, shield,
     spikeDebuff,
-    playing = false, playButton;
+    playing = false, playButton,
+    music;
 
 //preload images, fonts, animations, soundtracks
 
@@ -18,6 +19,8 @@ function preload() {
     backgroundImage = loadImage("assets/background/sky bridge.png");//load background
     shieldImage = loadImage("assets/buffs/Bubble.png");//load shield image
     digitalDisco = loadFont("assets/font/DigitalDisco.ttf");//load font
+    soundFormats('mp3');
+    music = loadSound('assets/sounds/music.mp3');//load background music
 }
 
 //setup sprites, canvas, world physics
@@ -242,8 +245,6 @@ function setup() {
 
 
     allSprites.autoDraw = false;
-    //only for testing
-    // allSprites.debug = true;
 
     textAlign(CENTER, CENTER);
     textFont(digitalDisco);
@@ -251,16 +252,16 @@ function setup() {
     playButton = new Sprite(canvas.w / 2, canvas.h / 2, 200, 70, 's');
     playButton.visible = false;
     playButton.color = color(0, 0, 0, 255);
-    // playButton.collider='none';
-
 
     //background image
     image(backgroundImage, 0, 0);
     playButton.draw();
 
+    music.playMode = 'restart';
+    music.play();
+    music.setLoop(true);
+    music.setVolume(0.08);
 }
-
-
 
 
 
