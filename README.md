@@ -1,6 +1,6 @@
 # How to Play
 
-Play game at: <https://kotuseid.github.io/term-3-assignment/>
+Play game at: <https://kotuseid.github.io/The-Crypto-Chronicles/>
 
 Robot controls:
 * WASD for movement
