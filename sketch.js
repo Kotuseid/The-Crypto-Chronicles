@@ -302,9 +302,9 @@ function draw() {
         if (player1.health > 0 && player2.health > 0) {
 
             // --- PLAYER ATTACKS --- //
-            if (kb.pressed('e')) {
+            if (kb.pressed('v')) {
                 player1.attack1();
-            } else if (kb.pressed('q')) {
+            } else if (kb.pressed('b')) {
                 player1.attack2();
             }
             if (kb.pressed('.')) {

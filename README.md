@@ -4,8 +4,8 @@ Play game at: <https://kotuseid.github.io/The-Crypto-Chronicles/>
 
 Robot controls:
 * WASD for movement
-* q for heavy attack, longer cooldown
-* e for light attack, less cooldown
+* b for heavy attack, longer cooldown
+* v for light attack, less cooldown
 
 Lizard controls:
 * arrow keys for movement
