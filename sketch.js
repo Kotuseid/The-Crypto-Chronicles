@@ -11,7 +11,7 @@ let player1, player2,
     healthBoost, shield,
     spikeDebuff,
     playing = false, playButton,
-    music;
+    music, swordSound, punchSound, metalSound,cutSound,powerupSound;
 
 //preload images, fonts, animations, soundtracks
 
@@ -21,6 +21,11 @@ function preload() {
     digitalDisco = loadFont("assets/font/DigitalDisco.ttf");//load font
     soundFormats('mp3');
     music = loadSound('assets/sounds/music.mp3');//load background music
+    swordSound = loadSound('assets/sounds/sword.mp3');
+    punchSound = loadSound('assets/sounds/punch.mp3');
+    metalSound = loadSound('assets/sounds/metal.mp3');
+    cutSound = loadSound('assets/sounds/cut.mp3');
+    powerupSound = loadSound('assets/sounds/powerup.mp3');
 }
 
 //setup sprites, canvas, world physics
@@ -30,6 +35,17 @@ function setup() {
 
     backgroundImage.width = canvas.w;
     backgroundImage.height = canvas.h;
+
+    // --- SOUNDS --- //
+    music.playMode = 'restart';
+    music.setLoop(true);
+    music.setVolume(0.08);
+    swordSound.setVolume(0.5);
+    punchSound.setVolume(0.5);
+    cutSound.setVolume(0.05);
+    metalSound.setVolume(0.05);
+    powerupSound.setVolume(0.05);
+
 
     // --- BORDERS --- //
     border = new Group();
@@ -77,45 +93,49 @@ function setup() {
     player1.attack1 = async () => {
         if (player1.cooldown == 0) {
             player1.cooldown = maxCooldown * 2 / 3;
-
-            await player1.changeAni('attack1');
+            swordSound.play();
             if (player1.overlapping(player2) && player2.invincible == false) {
                 if (!player1.mirror.x) {
                     if (player1.x < player2.x) {
                         player2.health -= 5;
+                        cutSound.play();
                     }
                 } else {
                     if (player1.x > player2.x) {
                         player2.health -= 5;
+                        cutSound.play();
                     }
                 }
                 if (player2.health < 0) {
                     player2.health = 0;
                 }
             }
+                await player1.changeAni('attack1');
             player1.changeAni('idle');
         }
     }
     player1.attack2 = async () => {
         if (player1.cooldown == 0) {
             player1.cooldown = maxCooldown;
-
-            await player1.changeAni('attack2');
+            swordSound.play();
             if (player1.overlapping(player2) && player2.invincible == false) {
                 if (!player1.mirror.x) {
                     if (player1.x < player2.x) {
                         player2.health -= 10;
+                        cutSound.play();
                     }
                 } else {
                     if (player1.x > player2.x) {
                         player2.health -= 10;
+                        cutSound.play();
                     }
                 }
-
+                
                 if (player2.health < 0) {
                     player2.health = 0;
                 }
             }
+            await player1.changeAni('attack2');
             player1.changeAni('idle');
         }
     }
@@ -149,16 +169,17 @@ function setup() {
     player2.attack1 = async () => {
         if (player2.cooldown == 0) {
             player2.cooldown = maxCooldown * 2 / 3;
-
-            await player2.changeAni('attack1');
+            punchSound.play();
             if (player2.overlapping(player1) && player1.invincible == false) {
                 if (!player2.mirror.x) {
                     if (player2.x < player1.x) {
                         player1.health -= 7;
+                        metalSound.play();
                     }
                 } else {
                     if (player2.x > player1.x) {
                         player1.health -= 7;
+                        metalSound.play();
                     }
                 }
 
@@ -166,28 +187,31 @@ function setup() {
                     player1.health = 0;
                 }
             }
+            await player2.changeAni('attack1');
             player2.changeAni('idle');
         }
     }
     player2.attack2 = async () => {
         if (player2.cooldown == 0) {
             player2.cooldown = maxCooldown;
-
-            await player2.changeAni('attack2');
+            punchSound.play();
             if (player2.overlapping(player1) && player1.invincible == false) {
                 if (!player2.mirror.x) {
                     if (player2.x < player1.x) {
                         player1.health -= 13;
+                        metalSound.play();
                     }
                 } else {
                     if (player2.x > player1.x) {
                         player1.health -= 13;
+                        metalSound.play();
                     }
                 }
                 if (player1.health < 0) {
                     player1.health = 0;
                 }
             }
+            await player2.changeAni('attack2');
             player2.changeAni('idle');
         }
     }
@@ -257,9 +281,7 @@ function setup() {
     image(backgroundImage, 0, 0);
     playButton.draw();
 
-    music.playMode = 'restart';
-    music.setLoop(true);
-    music.setVolume(0.08);
+    
 }
 
 

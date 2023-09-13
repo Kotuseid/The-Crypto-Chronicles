@@ -88,6 +88,8 @@ function boostHealth(p, h) {
         p.health = 100;
     }
     h.remove();
+    powerupSound.play();
+    
     setTimeout(() => {
         if (healthBoost.length == 0) {
             new healthBoost.Sprite();
@@ -103,6 +105,7 @@ function boostShield(p, s) {
         p.invincible = false;
     }, 5000);
     s.remove();
+    powerupSound.play();
 
     setTimeout(() => {
         if (shield.length == 0) {
@@ -115,6 +118,11 @@ function boostShield(p, s) {
 function spikeDamage(p, s) {
     if (!p.invincible && frameCount % 60 == 0) {
         p.health -= 1;
+        if (p.keys.up == "w") {
+            metalSound.play();
+        } else {
+            cutSound.play();
+        }
     }
 }
 
