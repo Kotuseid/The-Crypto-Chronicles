@@ -173,7 +173,7 @@ function playScreen() {
         player2.y = canvas.h / 2;
         
 
-        player1.agility = 4;
+        player1.agility = 5;
         player1.health = 100;
         player1.cooldown = 0;
         player1.invincible = false;
@@ -181,7 +181,7 @@ function playScreen() {
         player1.changeAni('idle');
 
 
-        player2.agility = 3;
+        player2.agility = 4;
         player2.health = 100;
         player2.cooldown = 0;
         player2.invincible = false;
